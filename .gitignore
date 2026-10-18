@@ -22,8 +22,6 @@ native_host/dist/
 
 # Personal downloads and runtime data
 downloads/
-data/
-ffmpeg/
 *.log
 downloadx_diagnostic.txt
 

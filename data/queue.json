@@ -1,0 +1,24 @@
+[
+ {
+  "id": "2b734ec63a",
+  "url": "https://youtu.be/Pd1yGW_g2T8?si=N4vatH2CTs2rAlKk",
+  "referer": "",
+  "dest_dir": "D:\\Projects\\DownloadX\\downloads",
+  "connections": 8,
+  "filename": null,
+  "path": "D:\\Projects\\DownloadX\\downloads\\watch",
+  "size": 1293997,
+  "resumable": false,
+  "status": "completed",
+  "error": "",
+  "added": 1791920357.2147086,
+  "downloaded": 1293997,
+  "segments": [
+   {
+    "start": 0,
+    "end": 1293996,
+    "pos": 1293997
+   }
+  ]
+ }
+]

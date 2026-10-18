@@ -1,0 +1,9 @@
+﻿{
+    "name":  "com.downloadx.host",
+    "description":  "DownloadX native helper",
+    "path":  "D:\\Projects\\DownloadX\\native_host\\downloadx_host.exe",
+    "type":  "stdio",
+    "allowed_origins":  [
+                            "chrome-extension://nobiidalhdhibgabpdlodcfcefojejnc/"
+                        ]
+}
