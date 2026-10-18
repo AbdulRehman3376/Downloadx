@@ -1,22 +1,53 @@
-# DownloadX — free IDM-style download manager (Windows, Python, no extra packages)
+# DownloadX — Free IDM-Style Download Manager for Windows
 
-**Step 1 (v0.2.0)** — desktop app: multi-connection, pause/resume, queue, progress.
-Chrome auto-capture Step 2 mein aayega. Poori tafseel: **STATUS.md**.
+DownloadX is a Windows download manager built with Python. It provides a desktop interface for managing downloads, tracking progress, organizing the download queue, and supporting pause and resume functionality.
 
-## Chalana
-1. Python 3 (python.org, *Add Python to PATH*).
-2. `DownloadX.bat` double-click.
-3. **Add URL** → link paste → **Download now**.
+## Current Development Status
 
-## Tests
+**Step 1 — Desktop Application (v0.2.0)**
+
+The current desktop application includes:
+- Multi-connection downloads
+- Pause and resume functionality
+- Download queue management
+- Download progress tracking
+
+**Browser Integration:** Chrome integration and automatic download capture are planned for a subsequent development phase. See `STATUS.md` for the latest implementation status.
+
+## Getting Started
+
+1. Install Python 3 from https://www.python.org/downloads/.
+2. During installation, enable **Add Python to PATH**.
+3. Double-click `DownloadX.bat` to launch the application.
+4. Select **Add URL** and paste the download link.
+5. Click **Download Now** to start the download.
+
+## Running Tests
+
+Run the automated test suite using:
+
 `run_tests.bat`
 
-## Folders
+## Project Structure
+
+```text
+DownloadX/
+├── app.py                  Application entry point
+├── DownloadX.bat           Application launcher
+├── downloadx/
+│   ├── engine.py           Download engine
+│   ├── gui.py              Desktop user interface
+│   └── util.py              Utility functions
+├── tests/
+│   └── test_engine.py      Automated engine tests
+├── extension/              Browser extension components
+├── native_host/            Native messaging host components
+├── STATUS.md               Development status and roadmap
+└── REQUIREMENTS.txt        Requirements and installation guide
 ```
-app.py / DownloadX.bat   app launcher
-downloadx/               engine.py (download engine), gui.py (window), util.py
-tests/test_engine.py     automatic tests
-extension/, native_host/ purana prototype (Step 2 mein naye engine se judega)
-STATUS.md                done / baqi list
-```
-Sirf wohi content download karein jo aapka apna ho ya jiski ijazat ho.
+
+The `extension` and `native_host` directories contain browser integration components. Refer to `STATUS.md` for their current implementation status.
+
+## Responsible Use
+
+Download only content that you own or are legally authorized to download. Always comply with applicable copyright laws and website terms of service.
