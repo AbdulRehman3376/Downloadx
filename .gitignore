@@ -1,0 +1,50 @@
+﻿# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Build outputs
+build/
+build_output/
+build_temp/
+dist/
+native_host/build/
+native_host/dist/
+
+# Executables and compiled binaries
+*.exe
+*.dll
+*.pyd
+
+# Personal downloads and runtime data
+downloads/
+data/
+ffmpeg/
+*.log
+downloadx_diagnostic.txt
+
+# Backups and temporary files
+*.bak
+*.backup
+*.old
+*.orig
+*.tmp
+*.temp
+*_old/
+*_backup/
+*_backup
+* copy.*
+* - Copy.*
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+native_host/downloadx_host.old.py

@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "DownloadX",
+  "version": "0.3.1",
+  "description": "IDM-style download dashboard with persistent task list, queue, and native video downloads.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt/RllWW0x6IW5LXU0Zw6TPz5v37C8nBCPC/IdC4fZKFv4i7E2mGdaqSvYEZHBD1GwzZXCvyHQc69MPQmP0Tcv+Sh+htPFhTwZQnDtBu2+KsVBavyBTnfGEa9BGvXNpzZMh0yF7HfqrTPzaL5ILXZi0R344Zp9T59ecrJOXHUzINARzimsu8XRAz0kJZvoaUUhLfzcZv7az14mz6TwM9puVSZDZWtfhmwC2M5mkeGOyE+W/pg3b2aX8BI8sUTxCRteGN9Ks1qf1C5RXTkobNF5RVE4/5ud1mDEV8b05g65VM4XPmTiBhzSSGUqsu0xwK1kto3gmak4b/jPIoN8nA60QIDAQAB",
+  "permissions": [
+    "nativeMessaging",
+    "storage",
+    "tabs",
+    "downloads",
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+ "action": {
+  "default_title": "DownloadX – open download manager"
+}
+
+}

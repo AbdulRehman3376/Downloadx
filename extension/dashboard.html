@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DownloadX</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11-7.2a.8.8 0 0 0 0-1.4L8.2 4.1A.8.8 0 0 0 7 4.8z" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l.8 12.2a1.5 1.5 0 0 0 1.5 1.3h6.4a1.5 1.5 0 0 0 1.5-1.3L17.5 7M10 11v6M14 11v6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3L12 4zM12 10v4.5M12 17.2v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-speed" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0M12 16l4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  </defs>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><svg><use href="#i-down"/></svg></div>
+      <div>
+        <div class="brand-name">DownloadX</div>
+        <div class="brand-sub">Download manager</div>
+      </div>
+    </div>
+
+    <button class="new-download" id="newDownloadBtn" type="button">
+      <svg><use href="#i-plus"/></svg><b>New download</b>
+    </button>
+
+    <div class="nav-label">Library</div>
+    <nav class="nav-list" id="filters">
+      <button class="nav-item active" data-filter="all" type="button"><svg class="nav-icon"><use href="#i-list"/></svg><span>All downloads</span><span class="nav-count" id="countAll">0</span></button>
+      <button class="nav-item" data-filter="downloading" type="button"><svg class="nav-icon"><use href="#i-down"/></svg><span>Downloading</span><span class="nav-count" id="countDownloading">0</span></button>
+      <button class="nav-item" data-filter="queued" type="button"><svg class="nav-icon"><use href="#i-clock"/></svg><span>Queue</span><span class="nav-count" id="countQueued">0</span></button>
+      <button class="nav-item" data-filter="complete" type="button"><svg class="nav-icon"><use href="#i-check"/></svg><span>Completed</span><span class="nav-count" id="countComplete">0</span></button>
+      <button class="nav-item" data-filter="error" type="button"><svg class="nav-icon"><use href="#i-alert"/></svg><span>Failed</span><span class="nav-count" id="countFailed">0</span></button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <label class="capture-card" title="Send normal browser downloads (software, zip, exe...) to DownloadX">
+        <div><strong>Capture downloads</strong><small>Take over browser downloads</small></div>
+        <input type="checkbox" id="captureToggle" class="switch" checked>
+      </label>
+      <div class="helper-card">
+        <span class="live-dot" id="helperDot"></span>
+        <div><strong>Native helper</strong><small id="helperStatus">Checking…</small></div>
+        <button id="pingBtn" type="button" title="Test connection" aria-label="Test helper connection"><svg><use href="#i-retry"/></svg></button>
+      </div>
+      <div class="version">DownloadX · Chrome extension</div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Dashboard</div>
+        <h1 id="pageTitle">All downloads</h1>
+      </div>
+      <div class="top-actions">
+        <label class="search-box"><svg><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Search downloads" autocomplete="off"></label>
+        <button class="icon-button" id="refreshBtn" type="button" title="Refresh" aria-label="Refresh"><svg><use href="#i-retry"/></svg></button>
+      </div>
+    </header>
+
+    <section class="quick-stats">
+      <div class="stat-card"><div class="stat-icon blue"><svg><use href="#i-down"/></svg></div><div><div class="stat-label">Active</div><div class="stat-value" id="statActive">0</div></div></div>
+      <div class="stat-card"><div class="stat-icon amber"><svg><use href="#i-clock"/></svg></div><div><div class="stat-label">In queue</div><div class="stat-value" id="statQueue">0</div></div></div>
+      <div class="stat-card"><div class="stat-icon green"><svg><use href="#i-check"/></svg></div><div><div class="stat-label">Completed</div><div class="stat-value" id="statComplete">0</div></div></div>
+      <div class="stat-card"><div class="stat-icon violet"><svg><use href="#i-speed"/></svg></div><div><div class="stat-label">Total speed</div><div class="stat-value" id="statSpeed">—</div></div></div>
+    </section>
+
+    <section class="add-panel hidden" id="addPanel">
+      <div class="panel-heading">
+        <div>
+          <h2>Add a download</h2>
+          <p>Paste a file link to download it directly, or a video page link to pick a quality.</p>
+        </div>
+        <button class="icon-button small" id="closeAddBtn" type="button" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+      </div>
+      <div class="url-row">
+        <input id="urlInput" type="url" placeholder="https://" spellcheck="false" autocomplete="off">
+        <button class="secondary-button" id="formatsBtn" type="button">Get video formats</button>
+        <button class="primary-button" id="directBtn" type="button">Download file</button>
+      </div>
+      <div class="format-area hidden" id="formatArea">
+        <label for="formatSelect">Quality</label>
+        <div class="format-row">
+          <select id="formatSelect"></select>
+          <button class="primary-button" id="queueVideoBtn" type="button">Add to queue</button>
+        </div>
+      </div>
+      <div class="add-status" id="addStatus"></div>
+    </section>
+
+    <section class="list-card">
+      <div class="list-toolbar">
+        <div class="toolbar-left">
+          <label class="select-all"><input type="checkbox" id="selectAll"> Select all</label>
+          <div class="bulk-actions" id="bulkActions">
+            <button data-bulk="pause" type="button"><svg><use href="#i-pause"/></svg>Pause</button>
+            <button data-bulk="resume" type="button"><svg><use href="#i-play"/></svg>Resume</button>
+            <button data-bulk="cancel" type="button"><svg><use href="#i-stop"/></svg>Cancel</button>
+            <button data-bulk="cancel-delete" class="danger" type="button"><svg><use href="#i-ban"/></svg>Cancel &amp; delete</button>
+            <button data-bulk="remove" type="button"><svg><use href="#i-x"/></svg>Remove from list</button>
+            <button data-bulk="delete-file" class="danger" type="button"><svg><use href="#i-trash"/></svg>Delete permanently</button>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <span id="visibleCount">0 items</span>
+          <button class="text-button" id="clearHistoryBtn" type="button">Clear finished</button>
+        </div>
+      </div>
+
+      <div class="task-list" id="taskList"></div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-art"><svg><use href="#i-down"/></svg></div>
+        <h2>No downloads here yet</h2>
+        <p>Add a file URL or open a video page and use the DownloadX video button.</p>
+        <button class="primary-button" id="emptyAddBtn" type="button">＋ Add your first download</button>
+      </div>
+    </section>
+
+    <footer class="footer"><span><i class="live-dot"></i><span id="footerInfo">Ready</span></span><span>Up to 3 downloads run at once</span></footer>
+  </main>
+</div>
+
+<template id="taskTemplate">
+  <article class="task-row">
+    <label class="task-check"><input type="checkbox" class="task-select" aria-label="Select download"></label>
+    <div class="file-icon"></div>
+    <div class="task-main">
+      <div class="task-title-line"><span class="task-title"></span><span class="status-pill"></span></div>
+      <div class="task-subtitle"></div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="task-meta"><span class="task-message"></span><span class="task-numbers"></span></div>
+    </div>
+    <div class="task-speed"><span class="speed-value"></span><span class="eta-value"></span></div>
+    <div class="task-actions">
+      <button data-action="pause" type="button" title="Pause"><svg><use href="#i-pause"/></svg></button>
+      <button data-action="resume" type="button" title="Resume"><svg><use href="#i-play"/></svg></button>
+      <button data-action="cancel" type="button" title="Cancel (keep partial file)"><svg><use href="#i-stop"/></svg></button>
+      <button data-action="cancel-delete" class="danger" type="button" title="Cancel &amp; delete files permanently"><svg><use href="#i-ban"/></svg></button>
+      <button data-action="retry" type="button" title="Retry"><svg><use href="#i-retry"/></svg></button>
+      <button data-action="remove" type="button" title="Remove from list (keeps file)"><svg><use href="#i-x"/></svg></button>
+      <button data-action="delete-file" class="danger" type="button" title="Delete file permanently"><svg><use href="#i-trash"/></svg></button>
+    </div>
+  </article>
+</template>
+
+<div class="modal-backdrop hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal">
+    <div class="modal-icon"><svg><use href="#i-trash"/></svg></div>
+    <h3 id="confirmTitle">Delete permanently?</h3>
+    <p id="confirmText"></p>
+    <div class="modal-actions">
+      <button class="secondary-button" id="confirmNo" type="button">Keep it</button>
+      <button class="danger-button" id="confirmYes" type="button">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>
