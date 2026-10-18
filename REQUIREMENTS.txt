@@ -1,0 +1,170 @@
+# DownloadX — System Requirements and Installation Guide
+
+## 1. Overview
+
+DownloadX is a Windows download manager designed to provide download queue management, progress tracking, pause and resume functionality, and browser integration.
+
+This document describes the software requirements, installation procedure, configuration, testing, and release build process.
+
+## 2. System Requirements
+
+**Operating System**
+- Windows 10 or Windows 11 (64-bit recommended)
+
+**Required Software**
+- Python 3: https://www.python.org/downloads/
+- Google Chrome (required for browser extension functionality)
+- Git: https://git-scm.com/downloads (optional; required to clone the repository)
+
+**Additional Components**
+- FFmpeg and FFprobe for supported media-processing features
+- PyInstaller for building standalone executables
+- Inno Setup 6 for creating the Windows installer
+
+When installing Python, enable the **Add Python to PATH** option.
+
+## 3. Download the Source Code
+
+Download the project from the official repository:
+
+https://github.com/AbdulRehman3376/Downloadx
+
+Alternatively, clone the repository using Git:
+
+```powershell
+git clone https://github.com/AbdulRehman3376/Downloadx.git
+cd Downloadx
+```
+
+## 4. Run DownloadX from Source
+
+Open PowerShell in the project directory and execute:
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe app.py
+```
+
+Alternatively, double-click `DownloadX.bat` to launch the application after Python has been installed.
+
+## 5. FFmpeg and FFprobe Configuration
+
+FFmpeg and FFprobe are required for supported media-processing functionality.
+
+Download a suitable Windows build from:
+
+https://www.gyan.dev/ffmpeg/builds/
+
+Extract the downloaded archive and place the required executables at these locations within the project directory:
+
+```text
+ffmpeg/
+└── bin/
+    ├── ffmpeg.exe
+    └── ffprobe.exe
+```
+
+**Important:** The current release build configuration expects both executables to exist before the installer is compiled. They are not currently downloaded automatically by the installer build process.
+
+GitHub rejects individual files larger than 100 MB when committed directly to a standard Git repository. Therefore, these large binaries should be distributed separately or obtained during setup through a properly implemented download process.
+
+## 6. Install Development Dependencies
+
+Create the virtual environment if it does not already exist:
+
+```powershell
+py -3 -m venv .venv
+```
+
+Install the required development and build packages:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.\.venv\Scripts\python.exe -m pip install pyinstaller
+```
+
+## 7. Build the Windows Installer
+
+Install Inno Setup 6 from the official website:
+
+https://jrsoftware.org/isinfo.php
+
+Ensure that the required source files, PyInstaller specifications, and FFmpeg executables are present. Then run:
+
+```powershell
+.\build_release.bat
+```
+
+If the build completes successfully, the installer should be generated at:
+
+```text
+build_output\DownloadX-Setup.exe
+```
+
+The final output location may depend on the build configuration.
+
+## 8. Configure the Chrome Extension
+
+To load the extension manually:
+
+1. Open Google Chrome.
+2. Navigate to `chrome://extensions`.
+3. Enable **Developer mode**.
+4. Select **Load unpacked**.
+5. Choose the project's `extension` directory.
+
+Browser integration also requires a correctly configured native messaging host. The host manifest must reference the correct launcher path, and its allowed extension ID must match the installed Chrome extension.
+
+If these values are inconsistent, browser integration may not function correctly.
+
+## 9. Run the Test Suite
+
+Run the project's test script:
+
+```powershell
+.\run_tests.bat
+```
+
+Alternatively, execute the tests directly:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
+```
+
+Review the test results and resolve any failures before distributing a release.
+
+## 10. GitHub Distribution
+
+The official source repository is:
+
+https://github.com/AbdulRehman3376/Downloadx
+
+For convenient installation, publish a tested `DownloadX-Setup.exe` through the repository's GitHub Releases section.
+
+Do not commit virtual environments, temporary build outputs, personal downloads, private settings, diagnostic logs, or backup files.
+
+Review runtime data before sharing it publicly, as it may contain personal paths, download history, or configuration information.
+
+## 11. Troubleshooting
+
+**Python is not recognized:** Install Python, enable Add Python to PATH, and reopen PowerShell.
+
+**FFmpeg files are missing:** Verify that both executables exist in `ffmpeg\bin`.
+
+**Installer build fails:** Confirm that the required dependencies, PyInstaller specification files, FFmpeg binaries, and Inno Setup compiler are available.
+
+**Chrome integration fails:** Verify the extension ID, native host manifest, launcher path, and Chrome extension configuration.
+
+**Tests fail:** Review the test output and resolve the reported errors before releasing the application.
+
+## 12. Legal Notice
+
+Download only content that you own or are legally authorized to download. Respect copyright laws, website terms of service, and applicable regulations.
+
+---
+
+**Project:** DownloadX  
+**Repository:** https://github.com/AbdulRehman3376/Downloadx  
+**Platform:** Windows  
+**Documentation:** Requirements and Installation Guide
